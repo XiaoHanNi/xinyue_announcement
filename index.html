@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>❀ 诗婳馨悦 ❀ 婳婠悦 ᝰ 诗悦 🌙</title>
+    <style>
+        :root {
+            --primary-warm: #FF9F43;
+            --accent-warm: #FECA57;
+
+            /* 🌙 色调回归：使用初版确认的银灰蓝体系 */
+            --moon-silver: #b0c4d8;
+            --moon-silver-light: #dce6ef;
+            --moon-glow: rgba(176, 196, 216, 0.4);
+
+            --bg-gradient: linear-gradient(170deg, #fffaf3 0%, #f5f0eb 40%, #eae4df 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --nav-glass: rgba(255, 252, 248, 0.88);
+            --text-main: #2c3e50;
+            --text-sub: #5d6d7e;
+            --sidebar-width: 280px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            min-width: 360px;
+            color: var(--text-main);
+            display: flex;
+            overflow-x: auto;
+        }
+
+        /* ===== 左侧：月色氛围区（桌面端） ===== */
+        .sidebar {
+            width: var(--sidebar-width);
+            min-height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+            z-index: 10;
+            background: transparent;
+            border-right: 1px solid var(--moon-silver-light);
+        }
+
+        .avatar {
+            width: 160px;
+            height: 160px;
+            margin-bottom: 24px;
+            border-radius: 50%;
+            animation: moonBreathe 6s ease-in-out infinite;
+        }
+
+        @keyframes moonBreathe {
+
+            0%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.85;
+                filter: drop-shadow(0 0 10px var(--moon-glow));
+            }
+
+            50% {
+                transform: translateY(-8px);
+                opacity: 1;
+                filter: drop-shadow(0 0 20px var(--moon-glow));
+            }
+        }
+
+        .sidebar-title {
+            font-size: 1.4em;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 6px;
+            background: linear-gradient(135deg, var(--moon-silver) 0%, var(--primary-warm) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sidebar-subtitle {
+            font-size: 0.82em;
+            color: var(--text-sub);
+            margin-bottom: 36px;
+            text-align: center;
+        }
+
+        /* 桌面端导航 */
+        .nav-list {
+            list-style: none;
+            width: 100%;
+        }
+
+        .nav-item {
+            width: 100%;
+            padding: 14px 20px;
+            margin-bottom: 8px;
+            border-radius: 12px;
+            border: none;
+            background: transparent;
+            color: var(--text-sub);
+            font-size: 0.95em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-item:hover {
+            background: rgba(176, 196, 216, 0.15);
+            color: var(--text-main);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, var(--primary-warm), #e67e22);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(255, 159, 67, 0.3);
+        }
+
+        .nav-icon {
+            font-size: 1.1em;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* ===== 右侧：内容阅读区 ===== */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .content-card {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 640px;
+            border-radius: 20px;
+            padding: 45px 40px;
+            border: 1px solid var(--moon-silver-light);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            position: relative;
+        }
+
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 3px;
+            border-radius: 0 0 3px 3px;
+            background: linear-gradient(90deg, transparent, var(--moon-silver), var(--primary-warm), var(--moon-silver), transparent);
+        }
+
+        .page {
+            display: none;
+            animation: fadeSlideIn 0.4s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .page-header .moon-symbol {
+            font-size: 32px;
+            background: linear-gradient(135deg, var(--moon-silver) 0%, var(--primary-warm) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 4px var(--moon-glow));
+        }
+
+        .page-header h2 {
+            font-size: 1.5em;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .content-section {
+            line-height: 1.9;
+            color: var(--text-sub);
+            font-size: 0.95em;
+            margin-bottom: 18px;
+        }
+
+        .content-section h3 {
+            color: var(--text-main);
+            margin-bottom: 8px;
+            font-size: 1.05em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 20px 0;
+            color: var(--moon-silver);
+            font-size: 14px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--moon-silver-light), transparent);
+        }
+
+        .action-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 14px 42px;
+            background: linear-gradient(135deg, var(--primary-warm), #e67e22);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.05em;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 159, 67, 0.25);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 159, 67, 0.35);
+        }
+
+        .footer-note {
+            margin-top: 24px;
+            font-size: 0.78em;
+            color: var(--moon-silver);
+            text-align: center;
+        }
+
+        /* ===== 📱 移动端专属重构 ===== */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                min-height: auto;
+                flex-direction: row;
+                padding: 16px 20px;
+                border-right: none;
+                border-bottom: 1px solid var(--moon-silver-light);
+                justify-content: flex-start;
+                gap: 14px;
+            }
+
+            .sidebar-moon {
+                width: 40px;
+                height: 40px;
+                margin-bottom: 0;
+                animation: none;
+            }
+
+            .sidebar-title {
+                font-size: 1.15em;
+                margin-bottom: 0;
+                text-align: left;
+            }
+
+            .sidebar-subtitle {
+                display: none;
+            }
+
+            .nav-list {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px 16px 100px;
+                align-items: flex-start;
+            }
+
+            .content-card {
+                padding: 28px 20px;
+                border-radius: 16px;
+            }
+
+            .page-header h2 {
+                font-size: 1.3em;
+            }
+
+            /* ✨ 底部导航栏：增加最小宽度防止过度压缩 */
+            .mobile-nav {
+                display: flex;
+                position: fixed;
+                bottom: 16px;
+                left: 16px;
+                right: 16px;
+                min-width: 320px;
+                /* 核心修改：保证4个按钮始终完整可见 */
+                background: var(--nav-glass);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border-radius: 20px;
+                padding: 6px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.6);
+                z-index: 100;
+                justify-content: space-around;
+            }
+
+            .mobile-nav-item {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 3px;
+                padding: 10px 4px;
+                min-width: 60px;
+                /* 单个按钮最小宽度兜底 */
+                border-radius: 14px;
+                border: none;
+                background: transparent;
+                color: var(--text-sub);
+                font-size: 0.7em;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.25s ease;
+            }
+
+            .mobile-nav-item .m-nav-icon {
+                font-size: 1.4em;
+                line-height: 1;
+                transition: transform 0.25s ease;
+            }
+
+            .mobile-nav-item.active {
+                background: linear-gradient(135deg, var(--primary-warm), #e67e22);
+                color: #fff;
+                box-shadow: 0 2px 8px rgba(255, 159, 67, 0.3);
+            }
+
+            .mobile-nav-item.active .m-nav-icon {
+                transform: scale(1.1);
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== 左侧/顶部 标题区 ===== -->
+    <aside class="sidebar">
+        <img class="avatar" src="./avatar.png" alt="❀ 诗婳馨悦 ❀ 婳婠悦 ᝰ 诗悦 🌙">
+        <div>
+            <div class="sidebar-title">❀诗婳馨悦ᝰ婳婠悦❀</div>
+            <div class="sidebar-subtitle">๑ 临时公告栏 · 后期完善 ๑</div>
+        </div>
+
+        <ul class="nav-list">
+            <li><button class="nav-item active" data-page="about"><span class="nav-icon">🎮</span>群聊简介</button></li>
+            <li><button class="nav-item" data-page="announce"><span class="nav-icon">🌸</span>群聊公告</button></li>
+            <li><button class="nav-item" data-page="join"><span class="nav-icon">🚀</span>立即加入</button></li>
+        </ul>
+    </aside>
+
+    <!-- ===== 右侧内容区 ===== -->
+    <main class="main-content">
+        <div class="content-card">
+            <div class="page active" id="page-about">
+                <div class="content-section">
+                    <h3>🌙 月下清谈·群聊简介</h3>
+                    <p>月出东山，清辉漫过檐角，似一层薄纱笼住尘世喧嚣。此间不以繁华相邀，唯借一缕月光，为奔波于俗务的灵魂辟一方静谧庭院。在这里，你可携半卷诗书，与同好共赏阴晴圆缺的流转；可温一壶清茶，将未尽的心事付与晚风；亦可静坐无言，任月华洗去眉间倦意，只余下与自我、与天地独处的安然。我们不求高谈阔论，只愿以月为媒，让每一次相逢都如月下漫步般从容，让每一句闲话都沾着露水的温润，在浮躁人间里，守住一份“明月松间照”的澄澈与自在。
+                    </p>
+                </div>
+                <div class="divider">☾</div>
+                <div class="content-section">
+                    <h3>⚠️ 守界须知·莫负清辉</h3>
+                    <p>月色虽柔，却自有其运行的轨迹；言谈虽畅，亦当有不可逾越的边界。为护此间清净不被浊流所染，请各位群友以心为尺、以法为度，谨记以下红线：</p>
+                    <p>严守法律底线，不越雷池半步：严禁发布、传播、讨论任何违反国家法律法规的内容，包括但不限于涉政敏感信息、淫秽色情、赌博毒品、暴力恐怖、诈骗传销、非法集资等。此类内容不仅违背公序良俗，更触碰法律高压线，一经发现，管理员将立即移除相关发言并永久移出群聊，情节严重者将依法向有关部门举报，绝不姑息；
+                        尊重他人权益，勿以恶语伤和：不得造谣诽谤、人身攻击、恶意揣测他人隐私，不得因观点分歧而煽动对立、辱骂争吵。月下清谈贵在包容与善意，愿诸君以礼相待，莫让尖锐之言惊扰这份难得的祥和，让每一份表达都带着对“人”的基本尊重；
+                    </p>
+                    <p>维护群内秩序，守护纯粹空间：禁止刷屏广告、恶意引流、频繁发送无关链接或未经核实的信息，不得组织任何形式的线下非法聚集或违规交易。此间是安放精神的角落，而非牟利或宣泄的场所，愿大家共同珍惜这份纯粹，让交流始终围绕“月下”的本真展开。
+                    </p>
+                    <p>月有盈亏，人有聚散，但守法之心、向善之意当如明月恒常。愿诸君在此间既能得月下之闲趣，亦能守心中之规矩，以清澈之言、端正之行，共护这一隅清欢。不负良夜，不负相逢，更不负这轮照见人间也照见本心的明月。
+                        🍵</p>
+                </div>
+            </div>
+
+            <div class="page active" id="page-announce">
+                <div class="content-section">
+                    <h3>🌙 栖月小筑·群聊公约 🌙</h3>
+                    <p>欢迎各位逐月而来的朋友，愿这片小小的月光天地，能接住你所有的阴晴圆缺。月亮温柔包容，却也有清晰的轮廓与边界，为了让这抹月色长久澄澈安宁，还请大家共同守护以下约定呀～🐇</p>
+                </div>
+                <div class="divider">☾</div>
+                <div class="content-section">
+                    <h3>🌕 一、月下相逢，以柔相待</h3>
+                    <p>月光从不刺眼，我们的交流也当如月色般温和。</p>
+                    <p>彼此尊重、善意沟通，不辱骂、不嘲讽、不人身攻击，不让言语变成伤人的利刃🥺</p>
+                    <p>尊重差异与边界，不强行说教、不道德绑架、不恶意引战，允许不同的声音轻轻存在</p>
+                    <p>珍惜相遇的缘分，不随意泄露他人隐私、不传播未经核实的聊天记录，守住彼此的信任✨</p>
+                </div>
+                <div class="divider">☾</div>
+                <div class="content-section">
+                    <h3>🌑 二、夜色有界，红线勿触</h3>
+                    <p>月光再柔，也有不可逾越的底线。依据现行法律法规与网络信息内容生态治理规定，以下内容为本群绝对禁区，触碰者将直接移出群聊，情节严重者会依法上报：</p><br>
+                    <p>严禁发布危害国家安全、破坏社会稳定、宣扬极端主义与恐怖主义的内容🚫</p>
+                    <p>严禁传播色情低俗、暴力血腥、赌博诈骗、毒品及相关违法诱导信息🚫</p>
+                    <p>严禁侮辱诽谤、人肉搜索、网络暴力，不得煽动性别、地域、民族对立🚫</p>
+                    <p>严禁侵害未成年人权益，不发布可能影响未成年人身心健康的内容，不诱导非理性追星、盲目打赏等不良行为⚖️</p>
+                </div>
+                <div class="divider">☾</div>
+                <div class="content-section">
+                    <h3>🌗 三、清辉所照，话题有度</h3>
+                    <p>我们欢迎与月亮相关的美好分享，也接纳日常里的温暖碎屑，但为避免争议与不适，以下话题请自觉规避：</p><br>
+                    <p>未经证实的社会热点、灾难事故、负面舆情及谣言🤫</p>
+                    <p>宗教争议、迷信活动、伪科学与极端情绪宣泄</p>
+                    <p>商业广告、引流推广、未经审核的外部链接与二维码</p>
+                    <p>过度私密的情感纠纷、家庭矛盾，以及自残自杀等相关引导（如有心理困扰请及时寻求专业帮助）🩹</p>
+                </div>
+                <div class="divider">☾</div>
+                <div class="content-section">
+                    <h3>🌘 四、守月之责，违规处置</h3>
+                    <p>管理员如同护月之人，会尽力守护这片天地的安宁，处置规则清晰明确：</p><br>
+                    <p>首次轻微违规：私信提醒 + 警告一次🌙</p>
+                    <p>再次违规或情节较重：禁言处理，时长视具体情况而定</p>
+                    <p>触碰法律红线或严重破坏群氛围：立即移出群聊，永不重新邀请</p>
+                    <p>发现违规内容可私信管理员反馈，我们会及时核实、公正处理，不偏袒、不姑息🛡️</p>
+                </div>
+                <div class="divider">☾</div>
+                <div class="content-section">
+                    <h3>🌕 五、愿月光常伴，你我皆安</h3>
+                    <p>月亮见证过无数悲欢，却始终沉默而温柔，希望这个群也能成为你疲惫时可以安心仰望的光。</p>
+                    <p>欢迎分享月色相关的摄影、诗词、音乐、手作、读书感悟，让美好在群里流转📸</p>
+                    <p>可以在安全范围内倾诉心事，但请记得群聊不是心理咨询室，必要时请寻求专业支持</p>
+                    <p>愿我们以月为信，既照亮自己，也不灼伤他人，让这片月光永远干净、温暖、明亮💫</p>
+                </div>
+                <div class="divider">☾</div>
+                <div class="content-section">
+                    <p>感谢每一位愿意遵守约定的你，愿我们在月下诗韵中，都能被月光温柔包裹，也能成为别人的小小月光🌙</p>
+                </div>
+                <div>
+                    <p>—— 诗婳馨悦管理组 2026.7.6更</p>
+                </div>
+            </div>
+
+            <div class="page" id="page-join">
+                <div class="page-header"><span class="moon-symbol">☾</span>
+                    <h2>踏入约下诗韵</h2>
+                </div>
+                <div class="content-section">
+                    <p>本月的月光已经亮起，就差你了。</p>
+                </div>
+                <div style="text-align:center; margin-top:30px;">
+                    <a href="#" class="action-btn">暂不支持加入 🌙</a>
+                </div>
+                <div class="footer-note">💫 之后将发布下月新群指引，请留意群内通知</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ===== 📱 移动端底部导航栏 ===== -->
+    <nav class="mobile-nav">
+        <button class="mobile-nav-item active" data-page="about"><span class="m-nav-icon">🎮</span>简介</button>
+        <button class="mobile-nav-item" data-page="announce"><span class="m-nav-icon">🌸</span>公告</button>
+        <button class="mobile-nav-item" data-page="join"><span class="m-nav-icon">🚀</span>加入</button>
+    </nav>
+
+    <script>
+        const desktopNavItems = document.querySelectorAll('.nav-item');
+        const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
+        const pages = document.querySelectorAll('.page');
+
+        function switchPage(targetPage, clickedItem, navGroup) {
+            navGroup.forEach(n => n.classList.remove('active'));
+            clickedItem.classList.add('active');
+
+            const otherGroup = navGroup === desktopNavItems ? mobileNavItems : desktopNavItems;
+            otherGroup.forEach(n => n.classList.toggle('active', n.dataset.page === targetPage));
+
+            pages.forEach(p => p.classList.remove('active'));
+            document.getElementById(`page-${targetPage}`).classList.add('active');
+        }
+
+        desktopNavItems.forEach(item => item.addEventListener('click', () => switchPage(item.dataset.page, item, desktopNavItems)));
+        mobileNavItems.forEach(item => item.addEventListener('click', () => switchPage(item.dataset.page, item, mobileNavItems)));
+    </script>
+
+</body>
+
+</html>
